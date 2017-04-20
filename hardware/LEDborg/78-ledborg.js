@@ -11,6 +11,9 @@ module.exports = function(RED) {
 
     try {
         var cpuinfo = fs.readFileSync("/proc/cpuinfo").toString();
+	// support RPi all & Banana Pi all (BPI-M1/BPI-M1+/BPI-R1/BPI-M2/BPI-M2+/BPI-M2U/BPI-M2M/BPI-M3/BPI-M64)
+        var boardinfo = fs.readFileSync("/var/lib/bananapi/board.sh").toString();
+        if (boardinfo.indexOf("BOARD=bpi") === -1)
         if (cpuinfo.indexOf(": BCM") === -1) { throw "Info : "+RED._("rpi-gpio.errors.ignorenode"); }
     }
     catch(err) {
